@@ -1,0 +1,46 @@
+<?php
+session_start();
+require_once '../config/database.php';
+require_once '../models/User.php';
+
+if($_POST) {
+    $database = new Database();
+    $db = $database->getConnection();
+    
+    $user = new User($db);
+    $user->username = $_POST['username'];
+    $user->password = $_POST['password'];
+    $user->role = $_POST['role'];
+    
+    if($user->login()) {
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['username'] = $user->username;
+        $_SESSION['role'] = $user->role;
+        $_SESSION['department'] = $user->department;
+        $_SESSION['name'] = $user->name;
+        
+        // Log the login
+        $log_query = "INSERT INTO audit_logs (user_id, action, description, ip_address) 
+                     VALUES (:user_id, 'LOGIN', 'User logged into the system', :ip_address)";
+        $log_stmt = $db->prepare($log_query);
+        $log_stmt->bindParam(':user_id', $user->id);
+        $log_stmt->bindParam(':ip_address', $_SERVER['REMOTE_ADDR']);
+        $log_stmt->execute();
+        
+        if($user->role == 'superadmin') {
+            header("Location: ../superadmin/dashboard.php");
+        } else {
+            header("Location: ../admin/dashboard.php");
+        }
+        exit();
+    } else {
+        $_SESSION['error'] = "Invalid username, password or role selection. Please try again.";
+        header("Location: ../login.php");
+        exit();
+    }
+} else {
+    $_SESSION['error'] = "Invalid request method.";
+    header("Location: ../login.php");
+    exit();
+}
+?>
