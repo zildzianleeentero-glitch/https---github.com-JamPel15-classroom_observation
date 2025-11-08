@@ -69,7 +69,7 @@ $deans = $user->getUsersByRole('dean');
     <div class="main-content">
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3>Manage Deans</h3>
+                <h3>Manage Evaluators</h3>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDeanModal">
                     <i class="fas fa-plus me-2"></i>Add New Dean
                 </button>
