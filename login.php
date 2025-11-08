@@ -173,8 +173,13 @@ if(isset($_SESSION['user_id'])) {
                     </label>
                     <select class="form-select" id="role" name="role" required>
                         <option value="">Select Your Role</option>
-                        <option value="superadmin">President/VPresident</option>
-                        <option value="admin">Dean/Principal</option>
+                        <option value="edp">EDP</option>
+                        <option value="president">President</option>
+                        <option value="vice_president">Vice President</option>
+                        <option value="dean">Dean</option>
+                        <option value="principal">Principal</option>
+                        <option value="chairperson">Chairperson</option>
+                        <option value="subject_coordinator">Subject Coordinator</option>
                     </select>
                 </div>
                 

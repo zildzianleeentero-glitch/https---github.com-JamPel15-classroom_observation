@@ -7,6 +7,15 @@ class Evaluation {
         $this->conn = $db;
     }
 
+    // Get total number of evaluations
+    public function getTotalEvaluations() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
     // Get evaluations for reporting
     public function getEvaluationsForReport($evaluator_id, $academic_year = '', $semester = '', $teacher_id = '') {
         $query = "SELECT e.*, t.name as teacher_name, u.name as evaluator_name,

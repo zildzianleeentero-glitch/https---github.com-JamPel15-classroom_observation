@@ -9,13 +9,20 @@ $current_file = basename($_SERVER['PHP_SELF']);
 $user_role = $_SESSION['role'];
 
 // Check if user is accessing correct directory based on role
-if($user_role == 'superadmin' && strpos($_SERVER['REQUEST_URI'], 'superadmin/') === false) {
-    header("Location: dashboard.php");
+if($user_role === 'edp' && !strpos($_SERVER['REQUEST_URI'], '/edp/')) {
+    header("Location: ../edp/dashboard.php");
     exit();
 }
 
-if($user_role == 'admin' && strpos($_SERVER['REQUEST_URI'], 'admin/') === false) {
-    header("Location: dashboard.php");
+// Superadmin level users (President, Vice President)
+if(in_array($user_role, ['president', 'vice_president']) && !strpos($_SERVER['REQUEST_URI'], '/superadmin/')) {
+    header("Location: ../superadmin/dashboard.php");
+    exit();
+}
+
+// Department-level administrators
+if(in_array($user_role, ['dean', 'principal', 'chairperson', 'subject_coordinator']) && !strpos($_SERVER['REQUEST_URI'], '/admin/')) {
+    header("Location: ../admin/dashboard.php");
     exit();
 }
 ?>

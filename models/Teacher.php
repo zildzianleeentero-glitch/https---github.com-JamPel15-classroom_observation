@@ -99,6 +99,36 @@ class Teacher {
         return $stmt->execute();
     }
 
+    // Get total number of teachers
+    public function getTotalTeachers() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
+    // Get all teachers
+    public function getAllTeachers() {
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY department, name";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // Update teacher status
+    public function updateStatus($id, $status) {
+        $query = "UPDATE " . $this->table_name . " 
+                 SET status = :status, updated_at = NOW() 
+                 WHERE id = :id";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        
+        return $stmt->execute();
+    }
+
     // Check if teacher already exists in department
     public function existsInDepartment($name, $department) {
         $query = "SELECT id FROM " . $this->table_name . " 

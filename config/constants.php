@@ -1,7 +1,12 @@
 <?php
 // User roles
-define('ROLE_SUPERADMIN', 'superadmin');
-define('ROLE_ADMIN', 'admin');
+define('ROLE_EDP', 'edp');
+define('ROLE_PRESIDENT', 'president');
+define('ROLE_VICE_PRESIDENT', 'vice_president');
+define('ROLE_DEAN', 'dean');
+define('ROLE_PRINCIPAL', 'principal');
+define('ROLE_CHAIRPERSON', 'chairperson');
+define('ROLE_SUBJECT_COORDINATOR', 'subject_coordinator');
 
 // Departments
 define('DEPT_CTE', 'CTE');

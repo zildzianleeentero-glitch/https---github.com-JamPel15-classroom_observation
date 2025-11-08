@@ -12,7 +12,18 @@ if($_POST) {
     $user->password = $_POST['password'];
     $user->role = $_POST['role'];
     
-    if($user->login()) {
+    // Debug information
+    error_log("Login attempt - Username: " . $user->username . ", Role: " . $user->role);
+    
+    // Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Add debug logging
+error_log("Login attempt - Username: " . $_POST['username'] . ", Role: " . $_POST['role']);
+
+if($user->login()) {
         $_SESSION['user_id'] = $user->id;
         $_SESSION['username'] = $user->username;
         $_SESSION['role'] = $user->role;
@@ -27,7 +38,9 @@ if($_POST) {
         $log_stmt->bindParam(':ip_address', $_SERVER['REMOTE_ADDR']);
         $log_stmt->execute();
         
-        if($user->role == 'superadmin') {
+        if($user->role == 'edp') {
+            header("Location: ../edp/dashboard.php");
+        } elseif(in_array($user->role, ['president', 'vice_president'])) {
             header("Location: ../superadmin/dashboard.php");
         } else {
             header("Location: ../admin/dashboard.php");

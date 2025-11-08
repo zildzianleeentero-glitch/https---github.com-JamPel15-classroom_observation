@@ -10,13 +10,16 @@
     <ul class="sidebar-nav">
         <li><a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
         
-        <?php if($_SESSION['role'] == 'superadmin'): ?>
-        <li><a href="users.php" class="nav-link"><i class="fas fa-users"></i> User Management</a></li>
-        <li><a href="reports.php" class="nav-link"><i class="fas fa-chart-bar"></i> Reports</a></li>
+        <?php if($_SESSION['role'] == 'edp'): ?>
+            <li><a href="users.php" class="nav-link"><i class="fas fa-users"></i> Manage Evaluators</a></li>
+            <li><a href="teachers.php" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> Manage Teachers</a></li>
+        <?php elseif($_SESSION['role'] == 'superadmin'): ?>
+            <li><a href="users.php" class="nav-link"><i class="fas fa-users"></i> User Management</a></li>
+            <li><a href="reports.php" class="nav-link"><i class="fas fa-chart-bar"></i> Reports</a></li>
         <?php else: ?>
-        <li><a href="evaluation.php" class="nav-link"><i class="fas fa-clipboard-check"></i> Evaluation</a></li>
-        <li><a href="teachers.php" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
-        <li><a href="reports.php" class="nav-link"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="evaluation.php" class="nav-link"><i class="fas fa-clipboard-check"></i> Evaluation</a></li>
+            <li><a href="teachers.php" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+            <li><a href="reports.php" class="nav-link"><i class="fas fa-chart-bar"></i> Reports</a></li>
         <?php endif; ?>
         
         <li class="nav-divider"></li>
